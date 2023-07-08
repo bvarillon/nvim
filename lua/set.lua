@@ -1,4 +1,5 @@
 vim.opt.timeoutlen=3000
+
 vim.o.background = "light"
 vim.cmd.colorscheme("gruvbox")
 
@@ -22,3 +23,5 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.o.completeopt = 'menuone,noselect'
+
+vim.g.python3_host_prog = "C:\\Users\\benoi\\AppData\\Local\\Microsoft\\WindowsApps\\python3.exe"
