@@ -1,4 +1,4 @@
-vim.opt.timeoutlen=3000
+vim.opt.timeoutlen=500
 
 vim.o.background = "light"
 vim.cmd.colorscheme("gruvbox")
