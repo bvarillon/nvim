@@ -45,6 +45,11 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 cmp_mappings['<Tab>'] = nil
 cmp_mappings['<S-Tab>'] = nil
 
+cmp.event:on(
+    'confirm_done',
+    require('nvim-autopairs.completion.cmp').on_confirm_done()
+)
+
 lsp.setup_nvim_cmp({
   mapping = cmp_mappings
 })
