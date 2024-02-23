@@ -2,6 +2,7 @@ vim.opt.timeoutlen=500
 
 vim.o.background = "light"
 vim.cmd.colorscheme("gruvbox")
+vim.api.nvim_set_hl(0, "NormalFloat", {bg = "none"})
 
 -- line numbers
 vim.opt.nu = true

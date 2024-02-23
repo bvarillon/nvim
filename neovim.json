@@ -1,0 +1,1 @@
+{"cargo":{"dap_name":"lldb"},"cmake":{"cmd":"cmake","build_dir":"{cwd}\\build\\{os}-{build_type}","build_type":"Release","dap_name":"lldb","args":{"configure":["-D","CMAKE_EXPORT_COMPILE_COMMANDS=1"]}}}
