@@ -6,7 +6,7 @@ vim.api.nvim_set_hl(0, "NormalFloat", {bg = "none"})
 
 -- line numbers
 vim.opt.nu = true
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 
 -- indentation
 vim.opt.tabstop = 4

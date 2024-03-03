@@ -22,47 +22,7 @@ require("remap")
 require("set")
 
 -- lsp configuration using VonHeikemen/lsp-zero.nvim
-local lsp = require('lsp-zero').preset({})
-lsp.preset("recommended")
-
-lsp.ensure_installed({
-  'clangd',
-})
-
--- Fix Undefined global 'vim'
-lsp.nvim_workspace()
-
-
-local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
-local cmp_mappings = lsp.defaults.cmp_mappings({
-  ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-  ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-  ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-  ["<C-Space>"] = cmp.mapping.complete(),
-})
-
-cmp_mappings['<Tab>'] = nil
-cmp_mappings['<S-Tab>'] = nil
-
-cmp.event:on(
-    'confirm_done',
-    require('nvim-autopairs.completion.cmp').on_confirm_done()
-)
-
-lsp.setup_nvim_cmp({
-  mapping = cmp_mappings
-})
-
-lsp.set_preferences({
-    suggest_lsp_servers = false,
-    sign_icons = {
-        error = 'E',
-        warn = 'W',
-        hint = 'H',
-        info = 'I'
-    }
-})
+local lsp = require('lsp-zero')
 
 lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}
@@ -105,4 +65,58 @@ lsp.on_attach(function(client, bufnr)
         vim.lsp.buf.format()
     end, { desc = 'Format current buffer with LSP' })
 end)
-lsp.setup()
+
+require('mason').setup({})
+require('mason-lspconfig').setup({
+    ensure_installed = {'clangd'},
+    handlers = {
+        lsp.default_setup,
+        lua_ls = function ()
+            local lua_opts = lsp.nvim_lua_ls()
+            require('lspconfig').lua_ls.setup(lua_opts)
+        end
+    }
+})
+
+local cmp = require('cmp')
+local cmp_select = {behavior = cmp.SelectBehavior.Select}
+
+require('luasnip.loaders.from_vscode').lazy_load()
+
+cmp.setup({
+    sources ={
+        {name = 'path'},
+        {name = 'nvim_lsp'},
+        {name = 'nvim_lua'},
+        {name = 'luasnip', keyword_length = 2},
+        {name = 'buffer', keyword_length = 3},
+    },
+    formating = lsp.cmp_format(),
+    mapping = cmp.mapping.preset.insert({
+        ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+        ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+        ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+        ["<C-Space>"] = cmp.mapping.complete(),
+    })
+})
+
+cmp.event:on(
+    'confirm_done',
+    require('nvim-autopairs.completion.cmp').on_confirm_done()
+)
+
+--lsp.setup_nvim_cmp({
+--  mapping = cmp_mappings
+--})
+--
+--lsp.set_preferences({
+--    suggest_lsp_servers = false,
+--    sign_icons = {
+--        error = 'E',
+--        warn = 'W',
+--        hint = 'H',
+--        info = 'I'
+--    }
+--})
+--
+--lsp.setup()
