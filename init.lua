@@ -25,9 +25,9 @@ require("set")
 local lsp = require('lsp-zero')
 
 lsp.on_attach(function(client, bufnr)
-  local opts = {buffer = bufnr, remap = false}
-
 --    vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+
+    lsp.default_keymaps({buffer=bufnr})
 
     local nmap = function(keys, func, desc)
         if desc then
