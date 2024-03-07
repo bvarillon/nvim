@@ -25,4 +25,6 @@ vim.opt.smartcase = true
 
 vim.o.completeopt = 'menuone,noselect'
 
+vim.g.have_nerd_font = true
+
 vim.g.python3_host_prog = "C:\\Users\\benoi\\AppData\\Local\\Microsoft\\WindowsApps\\python3.exe"
