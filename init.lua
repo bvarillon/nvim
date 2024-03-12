@@ -1,5 +1,5 @@
 -- map leader key
-vim.g.mapleader = " "
+require("set")
 
 -- lazy.nvim installation/configuration
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -19,7 +19,6 @@ require("lazy").setup("plugins") -- plugins are auto loaded from lua/plugins fol
 
 -- personal settings in lua/rempa.lua and lua/set.lua
 require("remap")
-require("set")
 
 -- lsp configuration using VonHeikemen/lsp-zero.nvim
 local lsp = require('lsp-zero').preset({})
