@@ -1,5 +1,3 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
 vim.opt.timeoutlen=500
 
 vim.o.background = "light"

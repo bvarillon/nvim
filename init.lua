@@ -1,5 +1,6 @@
 -- map leader key
-require("set")
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 -- lazy.nvim installation/configuration
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -19,6 +20,7 @@ require("lazy").setup("plugins") -- plugins are auto loaded from lua/plugins fol
 
 -- personal settings in lua/rempa.lua and lua/set.lua
 require("remap")
+require("set")
 
 -- lsp configuration using VonHeikemen/lsp-zero.nvim
 local lsp = require('lsp-zero')
@@ -33,7 +35,7 @@ lsp.on_attach(function(client, bufnr)
             desc = 'LSP: ' .. desc
         end
 
-        vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+        vim.keymap.set('n', keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
     end
 
     nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
@@ -90,7 +92,6 @@ cmp.setup({
         {name = 'luasnip', keyword_length = 2},
         {name = 'buffer', keyword_length = 3},
     },
-    formating = lsp.cmp_format(),
     mapping = cmp.mapping.preset.insert({
         ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
         ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
