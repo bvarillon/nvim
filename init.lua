@@ -46,6 +46,7 @@ lsp.on_attach(function(client, bufnr)
     nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
     nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
     nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+    nmap('<leader>df', function() require('telescope.builtin').lsp_document_symbols({symbols={'function','method','constructor'}}) end, '[D]ocument [F]unctions')
     nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
     nmap('<leader>fr', require('telescope.builtin').lsp_references, '[F]ind [R]eference')
 
@@ -66,6 +67,32 @@ lsp.on_attach(function(client, bufnr)
         vim.lsp.buf.format()
     end, { desc = 'Format current buffer with LSP' })
 end)
+
+
+-- Configuration of systemd-language-server (not configurable with mason)
+local lspconfig = require('lspconfig')
+local configs = require('lspconfig.configs')
+
+if not configs.systemd_ls then
+  configs.systemd_ls = {
+    default_config = {
+      cmd = { 'systemd-language-server' },
+      filetypes = { 'systemd' },
+      root_dir = function() return nil end,
+      single_file_support = true,
+      settings = {},
+    },
+    docs = {
+      description = [[
+https://github.com/psacawa/systemd-language-server
+
+Language Server for Systemd unit files.
+]]
+    }
+  }
+end
+
+lspconfig.systemd_ls.setup {}
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
