@@ -1,4 +1,5 @@
 return{
+    {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v3.x',
     dependencies = {
@@ -19,5 +20,7 @@ return{
         {'hrsh7th/cmp-nvim-lua'},
         {'rafamadriz/friendly-snippets'}
 
-    }
+    }},
+    {'TomDeneire/lsp-in-gutter.nvim',
+    config = true,}
 }

@@ -3,13 +3,13 @@ return {
     build = ":TSUpdate",
     dependencies = {
         'nvim-treesitter/nvim-treesitter-textobjects',
-        'p00f/nvim-ts-rainbow'
+        'HiPhish/rainbow-delimiters.nvim'
     },
     config = function()
         local configs = require("nvim-treesitter.configs")
 
         configs.setup({
-            ensure_installed = { "c", "lua", "cpp" },
+            ensure_installed = { "c", "lua", "cpp", "python" },
             sync_install = false,
             auto_install = true,
             highlight = { enable = true },

@@ -31,10 +31,6 @@ lsp.on_attach(function(client, bufnr)
     lsp.default_keymaps({buffer=bufnr})
 
     local nmap = function(keys, func, desc)
-        if desc then
-            desc = 'LSP: ' .. desc
-        end
-
         vim.keymap.set('n', keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
     end
 
@@ -51,7 +47,7 @@ lsp.on_attach(function(client, bufnr)
     nmap('<leader>fr', require('telescope.builtin').lsp_references, '[F]ind [R]eference')
 
     -- See `:help K` for why this keymap
-    nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+    nmap('K', function() vim.lsp.buf.hover({border = "rounded"}) end, 'Hover Documentation')
     nmap('<C-h>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
     -- Lesser used LSP functionality
@@ -132,6 +128,15 @@ cmp.event:on(
     require('nvim-autopairs.completion.cmp').on_confirm_done()
 )
 
+vim.diagnostic.config(
+    {
+        underline = true,
+        virtual_text = false,
+        update_in_insert = false,
+        severity_sort = true,
+    }
+)
+
 --lsp.setup_nvim_cmp({
 --  mapping = cmp_mappings
 --})
@@ -147,29 +152,3 @@ cmp.event:on(
 --})
 --
 --lsp.setup()
--- ====================================================
--- ROS 2 related commands
--- ====================================================
-vim.api.nvim_command([[
-  command! ColconBuild :! CC=clang CXX=clang++ colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-]])
-vim.api.nvim_command([[
-  command! -nargs=1 ColconBuildSingle :! CC=clang CXX=clang++ colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --packages-up-to <args>
-]])
-vim.api.nvim_command([[
-  command! ColconBuildDebug :! CC=clang CXX=clang++ colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug
-]])
-vim.api.nvim_command([[
-  command! -nargs=1 ColconBuildDebugSingle :! CC=clang CXX=clang++ colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug --packages-up-to <args>
-]])
-
--- Test
-vim.api.nvim_command([[
-  command! ColconTest :! colcon test
-]])
-vim.api.nvim_command([[
-  command! -nargs=1 ColconTestSingle :! colcon test --packages-select <args>
-]])
-vim.api.nvim_command([[
-  command! ColconTestResult :! colcon test-result --all
-]])
