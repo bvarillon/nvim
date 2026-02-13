@@ -22,6 +22,7 @@ require("lazy").setup("plugins") -- plugins are auto loaded from lua/plugins fol
 require("remap")
 require("set")
 
+require("mini.align").setup()
 -- lsp configuration using VonHeikemen/lsp-zero.nvim
 local lsp = require('lsp-zero')
 
