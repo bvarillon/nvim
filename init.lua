@@ -122,7 +122,7 @@ cmp.setup({
         ['<C-y>'] = cmp.mapping.confirm({ select = true }),
         ["<C-Space>"] = cmp.mapping.complete(),
     }),
-    window = {documentation = {border = "rounded"}},
+    window = {documentation = {winhighlight = "Normal:Folded"}},
 })
 
 cmp.event:on(
