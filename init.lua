@@ -99,7 +99,16 @@ require('mason-lspconfig').setup({
         lua_ls = function ()
             local lua_opts = lsp.nvim_lua_ls()
             require('lspconfig').lua_ls.setup(lua_opts)
-        end
+        end,
+        -- pylsp = function ()
+        --     require('lspconfig').pylsp.setup{
+        --           settings = { pylsp = { plugins = {
+        --            pycodestyle =  { enabled = false },
+        --            pylint =  { enabled = false },
+        --            flake8 =  { enabled = false },
+        --         } } }
+        --     }
+        -- end
     }
 })
 
