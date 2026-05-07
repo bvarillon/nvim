@@ -29,6 +29,7 @@ vim.g.have_nerd_font = true
 
 vim.opt.updatetime = 1000
 
+vim.opt.wildmode='list:longest'
 -- vim.g.python3_host_prog = "C:\\Users\\benoi\\AppData\\Local\\Microsoft\\WindowsApps\\python3.exe"
 
 -- Highlight when yanking (copying) text.
@@ -57,3 +58,8 @@ end, { desc = 'Print the git blame for the current line' })
 -- For example, to add the "nohlsearch" package to automatically turn off search highlighting after
 -- 'updatetime' and when going to insert mode
 vim.cmd('packadd! nohlsearch')
+
+vim.o.complete = ".,o"
+vim.o.completeopt = "fuzzy,menuone,noselect"
+vim.o.autocomplete = true
+vim.o.autocompletedelay = 250

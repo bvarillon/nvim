@@ -1,24 +1,18 @@
 return {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    dependencies = {
-        'nvim-treesitter/nvim-treesitter-textobjects',
-        'HiPhish/rainbow-delimiters.nvim'
-    },
+    {"romus204/tree-sitter-manager.nvim",
+    dependencies = {}, -- tree-sitter CLI must be installed system-wide
     config = function()
-        local configs = require("nvim-treesitter.configs")
-
-        configs.setup({
-            ensure_installed = { "c", "lua", "cpp", "python" },
-            sync_install = false,
-            auto_install = true,
-            highlight = { enable = true },
-            indent = { enable = true },
-            rainbow = {
-                enable = true,
-                extended_mode = true,
-                max_file_lines = nil,
-            }
+        require("tree-sitter-manager").setup({
+        -- Default Options
+        ensure_installed = {"c", "lua", "cpp", "python"}, -- list of parsers to install at the start of a neovim session
+        -- border = nil, -- border style for the window (e.g. "rounded", "single"), if nil, use the default border style defined by 'vim.o.winborder'. See :h 'winborder' for more info.
+        -- auto_install = false, -- if enabled, install missing parsers when editing a new file
+        -- highlight = true, -- treesitter highlighting is enabled by default
+        -- languages = {}, -- override or add new parser sources
+        -- parser_dir = vim.fn.stdpath("data") .. "/site/parser",
+        -- query_dir = vim.fn.stdpath("data") .. "/site/queries",
         })
     end
+    },
+    {'HiPhish/rainbow-delimiters.nvim'}
 }
