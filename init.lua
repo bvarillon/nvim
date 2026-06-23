@@ -16,7 +16,10 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("plugins") -- plugins are auto loaded from lua/plugins folder
+-- require("lazy").setup("plugins") -- plugins are auto loaded from lua/plugins folder
+require("lazy").setup({spec="plugins",performance={reset_packpath=false}}) -- deactivate reset_packpath to allow loading plugin from local pack/ folder
+
+vim.cmd.packadd('shell-command.nvim')
 
 -- personal settings in lua/rempa.lua and lua/set.lua
 require("remap")
