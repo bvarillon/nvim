@@ -8,6 +8,9 @@ vim.api.nvim_set_hl(0, "NormalFloat", {bg = "none"})
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
+-- border of FLOATING windows
+vim.o.winborder = "rounded"
+
 -- indentation
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -57,9 +60,14 @@ end, { desc = 'Print the git blame for the current line' })
 
 -- For example, to add the "nohlsearch" package to automatically turn off search highlighting after
 -- 'updatetime' and when going to insert mode
-vim.cmd('packadd! nohlsearch')
+-- vim.cmd('packadd nohlsearch')
 
 vim.o.complete = ".,o"
 vim.o.completeopt = "fuzzy,menuone,noselect"
-vim.o.autocomplete = true
+-- vim.o.autocomplete = true
 vim.o.autocompletedelay = 250
+
+-- Add coloration of specific words in comments
+-- vim.fn.matchadd("DiagnosticInfo", "\\(TODO:\\)")
+-- vim.fn.matchadd("DiagnosticHint", "\\(NOTE:\\)")
+-- vim.fn.matchadd("@text.note.comment", "\\(OPTIMATE\\)")

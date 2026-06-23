@@ -23,10 +23,10 @@ require("remap")
 require("set")
 
 require("mini.align").setup()
-vim.lsp.config("*", {
-    capabilities = vim.lsp.protocol.make_client_capabilities()
-})
 
+vim.lsp.config("*", {
+    capabilities = require("cmp_nvim_lsp").default_capabilities()
+})
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(event)
         local nmap = function(keys, func, desc)
@@ -46,7 +46,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         nmap('<leader>fr', function() require('telescope.builtin').lsp_references({jump_type='never', include_current_line=true}) end, '[F]ind [R]eference')
 
         -- See `:help K` for why this keymap
-        nmap('K', function() vim.lsp.buf.hover({border = "rounded"}) end, 'Hover Documentation')
+        nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+        -- nmap('K', function() vim.lsp.buf.hover({border = "rounded"}) end, 'Hover Documentation')
         nmap('<C-h>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
         -- Lesser used LSP functionality
@@ -62,62 +63,42 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.lsp.buf.format()
         end, { desc = 'Format current buffer with LSP' })
 
-        vim.lsp.completion.enable(true, event.data.client_id, event.buf, {})
+        vim.lsp.completion.enable(true, event.data.client_id, event.buf, {autotrigger=true})
     end
 })
-
--- -- Configuration of systemd-language-server (not configurable with mason)
--- local lspconfig = require('lspconfig')
--- local configs = require('lspconfig.configs')
---
--- if not configs.systemd_ls then
---   configs.systemd_ls = {
---     default_config = {
---       cmd = { 'systemd-language-server' },
---       filetypes = { 'systemd' },
---       root_dir = function() return nil end,
---       single_file_support = true,
---       settings = {},
---     },
---     docs = {
---       description = [[
--- https://github.com/psacawa/systemd-language-server
---
--- Language Server for Systemd unit files.
--- ]]
---     }
---   }
--- end
---
--- lspconfig.systemd_ls.setup {}
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {'clangd', 'lua_ls'},
 })
 
--- local cmp = require('cmp')
--- local cmp_select = {behavior = cmp.SelectBehavior.Select}
+local cmp = require('cmp')
+-- local cmp_select = {behavior = cmp.SelectBvisual keymapehavior.Select}
 --
 -- require('luasnip.loaders.from_vscode').lazy_load()
 --
--- cmp.setup({
---     sources ={
---         {name = 'path'},
---         {name = 'nvim_lsp'},
+cmp.setup({
+    sources ={
+        {name = 'path'},
+        {name = 'nvim_lsp'},
 --         {name = 'nvim_lua'},
 --         {name = 'luasnip', keyword_length = 2},
---         {name = 'buffer', keyword_length = 3},
---     },
+        {name = 'buffer', keyword_length = 3},
+    },
 --     mapping = cmp.mapping.preset.insert({
 --         ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
 --         ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
 --         ['<C-y>'] = cmp.mapping.confirm({ select = true }),
 --         ["<C-Space>"] = cmp.mapping.complete(),
 --     }),
---     window = {documentation = {winhighlight = "Normal:Folded"}},
--- })
---
+        mapping = cmp.mapping.preset.insert({
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        ["<Tab>"] = cmp.mapping.select_next_item(),
+        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+    }),
+    window = {documentation = {winhighlight = "Normal:Folded"}},
+})
+
 -- cmp.event:on(
 --     'confirm_done',
 --     require('nvim-autopairs.completion.cmp').on_confirm_done()
@@ -131,3 +112,6 @@ vim.diagnostic.config(
         severity_sort = true,
     }
 )
+
+vim.keymap.set('v', "<leader>ex", "<Plug>(ShellCmd)")
+

@@ -26,4 +26,23 @@ return{
     {'neovim/nvim-lspconfig'},
     {'williamboman/mason.nvim'},
     {'williamboman/mason-lspconfig.nvim'},
+    {'hrsh7th/nvim-cmp'},
+    {'hrsh7th/cmp-nvim-lsp'},
+    {'hrsh7th/cmp-buffer'},
+    {'hrsh7th/cmp-path'},
+    {"folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+            library = {
+                -- Or relative, which means they will be resolved from the plugin dir.
+                "lazy.nvim",
+                -- It can also be a table with trigger words / mods
+            },
+            -- always enable unless `vim.g.lazydev_enabled = false`
+            -- This is the default
+            enabled = function(root_dir)
+                return vim.g.lazydev_enabled == nil and true or vim.g.lazydev_enabled
+            end,
+        },
+    }
 }
